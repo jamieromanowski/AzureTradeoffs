@@ -24,11 +24,8 @@ namespace ABC.Pricing
                 log.LogInformation("C# HTTP trigger function processed a request.");
 
                 // add any logic for validating headers or authentication here
+                PricingRequest pricingRequest = ParseRequest(req);
 
-                string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-                dynamic requestObject = JsonConvert.DeserializeObject(requestBody);
-
-                PricingRequest pricingRequest = ParseRequest(requestObject);
                 if (pricingRequest == null)
                 {
                     //throw error - request is invalid
@@ -40,18 +37,21 @@ namespace ABC.Pricing
             }
             catch(Exception ex)
             {
-                log.LogCritical("unknown error occurred", req);
-
+                log.LogCritical("unknown error occurred", req, ex.Message);
                 return (ActionResult)new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }
         }
 
 
-        private static PricingRequest ParseRequest(dynamic request)
+        private static PricingRequest ParseRequest(HttpRequest httpRequest)
         {
             PricingRequest result = null;
-            string userRole = request?.UserRole;
-            string modelNumber = request?.ModelNumber;
+
+            string requestBody = new StreamReader(httpRequest.Body).ReadToEndAsync().Result;
+            dynamic requestObject = JsonConvert.DeserializeObject(requestBody);
+
+            string userRole = requestObject?.UserRole;
+            string modelNumber = requestObject?.ModelNumber;
 
             if(!String.IsNullOrEmpty(userRole) && !String.IsNullOrEmpty(modelNumber))
             {

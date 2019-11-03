@@ -1,6 +1,10 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
+using DurableExample.Models;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Azure.WebJobs.Host;
@@ -14,14 +18,40 @@ namespace DurableExample
         public static async Task<List<string>> RunOrchestrator(
             [OrchestrationTrigger] DurableOrchestrationContext context)
         {
-            var outputs = new List<string>();
+            List<string> outputs = new List<string>();
 
-            // Replace "hello" with the name of your Durable Activity Function.
-            outputs.Add(await context.CallActivityAsync<string>("DurableProcessPriceChange_Hello", "Tokyo"));
-            outputs.Add(await context.CallActivityAsync<string>("DurableProcessPriceChange_Hello", "Seattle"));
-            outputs.Add(await context.CallActivityAsync<string>("DurableProcessPriceChange_Hello", "London"));
+            // get request
+            PriceChangeRequest request = context.GetInput<PriceChangeRequest>();
 
-            // returns ["Hello Tokyo!", "Hello Seattle!", "Hello London!"]
+            // wait until the start time if needed
+            if (request.EffectiveDate == null && request.EffectiveDate > DateTime.UtcNow)
+            {
+                await context.CreateTimer(request.EffectiveDate??DateTime.UtcNow, CancellationToken.None);
+            }
+
+            // process for all of the systems that need the price changed in them
+            var parallelTasks = new List<Task<PriceChangeInSystemResponse>>();
+
+            // you could do this in an orchestrator loop, but I am simplifying this here
+
+            Task<PriceChangeInSystemResponse> system1Task = context.CallActivityAsync<PriceChangeInSystemResponse>("ChangePriceInSystem1", request);
+            parallelTasks.Add(system1Task);
+
+            Task<PriceChangeInSystemResponse> system2Task = context.CallActivityAsync<PriceChangeInSystemResponse>("ChangePriceInSystem2", request);
+            parallelTasks.Add(system2Task);
+
+            // Clean up
+            await Task.WhenAll(parallelTasks);
+
+            foreach (PriceChangeInSystemResponse result in parallelTasks
+                .Where(_ => !_.Result.WasSuccessful)
+                .Select(_ => _.Result))
+            {
+                outputs.Add(result.Message);
+            }
+
+            //done
+
             return outputs;
         }
 

@@ -29,7 +29,7 @@ namespace ABC.Pricing
                 if (pricingRequest == null)
                 {
                     //throw error - request is invalid
-                    new BadRequestObjectResult("Invalid request");
+                    return new BadRequestObjectResult("Invalid request");
                 }
 
                 PricingResponse result = PricingService.Calculate(pricingRequest, log);

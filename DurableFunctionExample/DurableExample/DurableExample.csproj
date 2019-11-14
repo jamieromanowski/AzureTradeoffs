@@ -16,4 +16,7 @@
       <CopyToPublishDirectory>Never</CopyToPublishDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="TimerToCheckIfAnyRequestsExist.cs" />
+  </ItemGroup>
 </Project>

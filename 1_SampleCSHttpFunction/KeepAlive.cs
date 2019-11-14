@@ -7,10 +7,10 @@ namespace _1_SampleCSHttpFunction
 {
     public static class KeepAlive
     {
-        [FunctionName("KeepAlive")]
-        public static void Run([TimerTrigger("0 */15 * * * *")]TimerInfo myTimer, ILogger log)
-        {
-            log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
-        }
+        //[FunctionName("KeepAlive")]
+        //public static void Run([TimerTrigger("0 */15 * * * *")]TimerInfo myTimer, ILogger log)
+        //{
+        //    log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
+        //}
     }
 }

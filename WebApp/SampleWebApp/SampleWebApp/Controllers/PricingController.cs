@@ -20,8 +20,7 @@ namespace SampleWebApp.Controllers
         }
         // POST api/values
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Post([Bind(include : "ModelNumber, UserRole")]PricingRequest pricingRequest)
+        public IActionResult Post([FromBody]PricingRequest pricingRequest)
         {
             try
             {

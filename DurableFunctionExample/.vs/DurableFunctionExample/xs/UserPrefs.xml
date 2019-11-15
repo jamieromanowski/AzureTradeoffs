@@ -6,6 +6,17 @@
       <File FileName="DurableExample/DurableProcessPriceChange.cs" Line="44" Column="31" />
       <File FileName="DurableExample/host.json" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="DurableFunctionExample" expanded="True">
+            <Node name="DurableExample" expanded="True">
+              <Node name="DurableProcessPriceChange.cs" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />

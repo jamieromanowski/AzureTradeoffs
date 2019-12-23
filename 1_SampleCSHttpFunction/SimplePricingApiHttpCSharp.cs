@@ -33,6 +33,7 @@ namespace ABC.Pricing
                 }
 
                 PricingResponse result = PricingService.Calculate(pricingRequest, log);
+
                 return (ActionResult)new OkObjectResult(result);
             }
             catch(Exception ex)

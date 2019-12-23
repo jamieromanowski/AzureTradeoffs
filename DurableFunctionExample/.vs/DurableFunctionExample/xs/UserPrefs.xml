@@ -1,0 +1,27 @@
+﻿<Properties StartupConfiguration="{B90A53EA-81A7-41F1-80BA-CEC7F5144E2A}|Default">
+  <MonoDevelop.Ide.ItemProperties.DurableExample PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="DurableExample/DurableProcessPriceChange.cs">
+    <Files>
+      <File FileName="DurableExample/TimerToCheckIfAnyRequestsExist.cs" Line="17" Column="31" />
+      <File FileName="DurableExample/DurableProcessPriceChange.cs" Line="44" Column="31" />
+      <File FileName="DurableExample/host.json" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="DurableFunctionExample" expanded="True">
+            <Node name="DurableExample" expanded="True">
+              <Node name="DurableProcessPriceChange.cs" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
